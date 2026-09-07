@@ -40,13 +40,13 @@ class State(AgentState):
 
 
 @tool
-def read_preference(runtime: ToolRuntime[Context]):
+def read_preference(runtime: ToolRuntime[Context, State]):
     """Read state"""
     return runtime.state.get("aime_python")
 
 
 @tool
-def update_preference(runtime: ToolRuntime[Context], aime_python: bool):
+def update_preference(runtime: ToolRuntime[Context, State], aime_python: bool):
     """Update state"""
     runtime.state["aime_python"] = aime_python
     return "Préférence mise à jour avec succès"
