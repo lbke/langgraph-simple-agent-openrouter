@@ -1,15 +1,10 @@
 from langgraph.pregel import Pregel
 
-from simple_agent.graph import calculator, graph, utc_now
+from simple_agent.graph import graph, read_preference, update_preference, utc_now
 
 
 def test_graph_compiles() -> None:
     assert isinstance(graph, Pregel)
-
-
-def test_calculator_tool() -> None:
-    result = calculator.invoke({"expression": "2 + 3 * 4"})
-    assert result == "14"
 
 
 def test_utc_now_tool() -> None:
