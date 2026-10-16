@@ -19,6 +19,9 @@ dev:
 run:
 	uv run langgraph dev --studio-url https://eu.smith.langchain.com
 
+tunnel:
+	uv run langgraph dev --tunnel --studio-url https://eu.smith.langchain.com
+
 test:
 	uv run python -m pytest tests/unit_tests -q
 

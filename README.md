@@ -29,6 +29,12 @@ cp .env.example .env
 uv run langgraph dev --studio-url https://eu.smith.langchain.com
 ```
 
+Or with tunnel:
+
+```bash
+uv run langgraph dev --tunnel --studio-url https://eu.smith.langchain.com
+```
+
 Optional `make` wrappers:
 
 ```bash

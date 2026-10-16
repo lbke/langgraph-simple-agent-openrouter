@@ -17,7 +17,8 @@ from langchain_core.tools import tool
 
 # https://openrouter.ai/docs/guides/community/langchain
 model = init_chat_model(
-    model="mistralai/mistral-small-2603",
+    # model="mistralai/mistral-small-2603",
+    model="google/gemini-3.1-flash-lite",
     model_provider="openai",
     base_url="https://openrouter.ai/api/v1",
     api_key=os.environ["OPENROUTER_API_KEY"],
