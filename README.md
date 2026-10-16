@@ -42,6 +42,17 @@ make dev
 make run
 ```
 
+## Upgrade modules
+
+```sh
+# Update versions from the lock
+uv lock --upgrade
+# Alternative pOur un package unique:
+# uv lock --upgrade-package mon-package
+# Install them
+uv sync
+```
+
 ## Tests and lint
 
 ```bash
