@@ -17,7 +17,7 @@ dev:
 	uv sync
 
 run:
-	uv run langgraph dev
+	uv run langgraph dev --studio-url https://eu.smith.langchain.com
 
 test:
 	uv run python -m pytest tests/unit_tests -q

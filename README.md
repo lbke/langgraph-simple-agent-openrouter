@@ -26,7 +26,7 @@ cp .env.example .env
 3. Run locally:
 
 ```bash
-uv run langgraph dev
+uv run langgraph dev --studio-url https://eu.smith.langchain.com
 ```
 
 Optional `make` wrappers:
