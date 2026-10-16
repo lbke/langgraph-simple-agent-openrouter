@@ -9,6 +9,12 @@ Minimal deployment template for a LangChain agent built with `create_agent(...)`
 - `langgraph.json` configured for LangSmith/LangGraph deployment.
 - A `uv`-managed local workflow with a small `Makefile` wrapper and starter tests.
 
+## Additions to this starter kit
+
+- OpenRouter automatically plugged in
+- LangChain MCP servers in .vscode/mcp.json (https://docs.langchain.com/use-these-docs)
+- Demo of a script mcp server with fastmcp (mcp_agent_demo)
+
 ## Quickstart
 
 1. Sync the project with `uv`:
