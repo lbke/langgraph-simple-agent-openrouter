@@ -5,7 +5,7 @@
   "graphs": {
     "agent": "simple_agent.graph:graph",
     "bonus_langgraph_agent": "bonus_langgraph_agent.graph:graph",
-    "mcp_agent_demo": "mcp_agent_demo.graph:graph"
+    "mcp_agent_demo": "mcp_agent_demo.graph:make_graph"
   },
   "env": ".env",
   "image_distro": "wolfi"

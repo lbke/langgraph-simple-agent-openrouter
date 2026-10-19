@@ -15,21 +15,12 @@ from langchain_core.tools import tool
 
 from langchain.mcp import MCPAdapter
 from pathlib import Path
+from os import path
 
 # 1. Helper function to fetch MCP tools synchronously using asyncio.run()
 
 # FIXME: proposed by chat.langchain to address langchain being async
 # But it doesn't work, we'll wait for official support
-
-
-def get_mcp_tools():
-    mcp_script = Path(__file__).resolve().with_name("mcp_calculator.py")
-
-    async def _fetch():
-        async with MCPAdapter(mcp_script) as adapter:
-            return await adapter.list_tools()
-
-    return asyncio.run(_fetch())
 
 
 # For OpenRouter, we won't use this default setup at all
@@ -44,18 +35,19 @@ model = init_chat_model(
     api_key=os.environ["OPENROUTER_API_KEY"],
 )
 
-# Contexte = valeurs globales (souvent read-only)
-
 
 class Context(TypedDict):
+    """
+    # Contexte = valeurs globales (souvent read-only)
+    """
     pass
-
-# State = état de l'agent
-
-# Important : doit hériter de "AgentState" pour le champ messages
 
 
 class State(AgentState):
+    """
+    # State = état de l'agent
+    # Important : doit hériter de "AgentState" pour le champ messages
+    """
     pass
 
 # Autres exempltes d'outils
@@ -67,15 +59,32 @@ def utc_now() -> str:
     return datetime.now(tz=timezone.utc).isoformat()
 
 
-mcp_tools = get_mcp_tools()
-graph = create_agent(
-    model=model,  # DEFAULT_MODEL,
-    tools=[utc_now, *mcp_tools],
-    state_schema=State,
-    context_schema=Context,
-    system_prompt=(
-        "You are a concise assistant. "
-        "Use tools when they add factual precision, then return a direct answer."
-    ),
-    name="simple_agent",
-)
+async def make_graph():
+    """
+    Demonstration d'un graphe généré en asynchrone
+
+    Cela permet par exemple :
+    - De récupérer une liste d'outils via le protocole MCP
+    - De récupérer le prompt système dans une base de données
+
+    Il faut ensuite indiquer la bonne fonction dans langgraph.json :
+    "mcp_agent_demo": "mcp_agent_demo.graph:make_graph"
+    """
+    # Chargement d'un script local en mode MCP stdio (avec FastMCP)
+    # On utilise "Path" de pathlib car le MCPAdapter
+    # le reconnaît automatiquement comme un fichier local
+    mcp_script = Path(__file__).resolve().with_name("mcp_calculator.py")
+    async with MCPAdapter(mcp_script) as adapter:
+        mcp_tools = await adapter.list_tools()
+        graph = create_agent(
+            model=model,  # DEFAULT_MODEL,
+            tools=[utc_now, *mcp_tools],
+            state_schema=State,
+            context_schema=Context,
+            system_prompt=(
+                "You are a concise assistant. "
+                "Use tools when they add factual precision, then return a direct answer."
+            ),
+            name="mcp_demo_agent",
+        )
+        return graph
